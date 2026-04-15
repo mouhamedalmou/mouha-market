@@ -1,15 +1,33 @@
-# Ecommerce App
+***# Ecommerce App
 
-Applicazione ecommerce full stack con frontend React + Vite e backend Node.js + Express + MongoDB.
+Applicazione ecommerce full stack con frontend separato dal backend.
+Permette di navigare un catalogo prodotti, aggiungere articoli al carrello, autenticarsi, completare il checkout e consultare la pagina "I miei ordini".
+ ## screenshot
+![Home](./screenshot/home.png)
+![Carrello](./screenshot/cart.png)
+![Ordini](./screenshot/orders.png)
 
-## Stack
+## Descrizione Del Progetto
 
-- Frontend: React, Vite, React Router, Tailwind CSS
-- Backend: Node.js, Express, Mongoose, JWT
+Il progetto è composto da:
+
+- un frontend React con Vite pubblicabile su Vercel
+- un backend Node.js + Express pubblicabile su Render
+- un database MongoDB per utenti, prodotti e ordini
+
+## Tecnologie Usate
+
+- Frontend: React, Vite, React Router, Tailwind CSS, Axios
+- Backend: Node.js, Express, Mongoose, JSON Web Token
 - Database: MongoDB Atlas
-- Deploy consigliato:
-  - Frontend su Vercel
-  - Backend su Render
+- Deploy: Vercel per il frontend, Render per il backend
+
+## Link Progetto
+
+- Frontend: `https://project-v14a8-9czaduxp-mouhamedalmous-projects.vercel.app`
+- Backend: `https://mouha-market-api.onrender.com`
+
+Sostituisci questi due link con gli URL reali dopo il deploy.
 
 ## Struttura progetto
 
