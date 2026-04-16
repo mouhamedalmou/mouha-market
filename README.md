@@ -24,7 +24,7 @@ Il progetto è composto da:
 
 ## Link Progetto
 
-- Frontend: `https://project-v14a8.vercel.app/`
+- Frontend: `mouhamed-market.vercel.app`
 - Backend: `https://mouha-market-api.onrender.com`
 
 Sostituisci questi due link con gli URL reali dopo il deploy.
