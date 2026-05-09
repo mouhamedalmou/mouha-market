@@ -7,7 +7,7 @@ function normalizeEmail(email) {
 }
 
 function getUserRole(user) {
-  return user.role || (user.isAdmin ? 'admin' : 'user')
+  return user.isAdmin || user.role === 'admin' ? 'admin' : 'user'
 }
 
 exports.register = async (req, res) => {

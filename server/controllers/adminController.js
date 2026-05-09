@@ -397,7 +397,7 @@ exports.getAdminUsers = async (req, res) => {
 
     res.json(users.map(user => {
       const stats = statsByUser.get(String(user._id))
-      const role = user.role || (user.isAdmin ? 'admin' : 'user')
+      const role = user.isAdmin || user.role === 'admin' ? 'admin' : 'user'
 
       return {
         id: user._id,

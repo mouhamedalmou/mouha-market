@@ -84,7 +84,7 @@ Il valore di default è `user`. Le API admin sono protette da:
 - controllo ruolo tramite `server/middleware/isAdmin.js`
 
 Per compatibilità con dati già presenti, il backend considera admin anche gli
-utenti legacy con `isAdmin: true`.
+utenti legacy con `isAdmin: true`, anche se non hanno ancora il campo `role`.
 
 ### Promuovere Un Utente Ad Admin
 
@@ -97,8 +97,10 @@ db.users.updateOne(
 )
 ```
 
-Poi effettua di nuovo il login. Gli admin vengono indirizzati alla dashboard
-`/admin` e vedono anche il link Admin nella navbar.
+Se il documento contiene già `isAdmin: true`, puoi aggiungere solo il campo
+`role: "admin"` per allinearlo al nuovo schema. Poi effettua di nuovo il login.
+Gli admin vengono indirizzati alla dashboard `/admin` e vedono anche il link
+Admin nella navbar.
 
 ## Admin Dashboard
 

@@ -20,7 +20,7 @@ module.exports = async (req, res, next) => {
       return res.status(401).json({ message: 'Utente non trovato' })
     }
 
-    const role = user.role || (user.isAdmin ? 'admin' : 'user')
+    const role = user.isAdmin || user.role === 'admin' ? 'admin' : 'user'
 
     req.user = {
       id: user._id.toString(),
