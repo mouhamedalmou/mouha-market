@@ -43,7 +43,7 @@ function Auth() {
         user: res.data.user,
       })
 
-      navigate('/')
+      navigate(res.data.user?.role === 'admin' || res.data.user?.isAdmin ? '/admin' : '/')
     } catch (err) {
       console.error(err)
       setMessage(err.response?.data?.message || 'Errore durante l\'autenticazione')

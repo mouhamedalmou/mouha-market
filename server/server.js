@@ -6,6 +6,7 @@ require('dotenv').config()
 const authRoutes = require('./routes/auth')
 const productRoutes = require('./routes/product')
 const orderRoutes = require('./routes/order')
+const adminRoutes = require('./routes/adminRoutes')
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -16,6 +17,7 @@ app.use(express.json())
 app.use('/api/auth', authRoutes)
 app.use('/api/products', productRoutes)
 app.use('/api/orders', orderRoutes)
+app.use('/api/admin', adminRoutes)
 
 app.get('/', (req, res) => {
   res.send('E-commerce API funzionante 🚀')

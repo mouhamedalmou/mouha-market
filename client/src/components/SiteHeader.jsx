@@ -69,6 +69,12 @@ function SiteHeader() {
             </NavLink>
           )}
 
+          {isAuthenticated() && (user?.role === 'admin' || user?.isAdmin) && (
+            <NavLink to="/admin" className={linkClassName}>
+              Admin
+            </NavLink>
+          )}
+
           <NavLink to="/cart" className={linkClassName}>
             <span className="inline-flex items-center gap-2">
               Carrello
