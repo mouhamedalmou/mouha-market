@@ -187,7 +187,9 @@ Variabile opzionale in `client/.env`:
 VITE_API_URL=http://localhost:3000
 ```
 
-Il client aggiunge automaticamente `/api` alla base URL.
+Il client aggiunge automaticamente `/api` alla base URL. Se per errore la
+variabile finisce già con `/api`, il client la normalizza ed evita richieste
+duplicate tipo `/api/api/products`.
 
 ## Seed Prodotti
 
@@ -251,6 +253,9 @@ VITE_API_URL=https://TUO-BACKEND.onrender.com
 
 Note:
 
+- non serve aggiungere `/api` alla env var del frontend
+- dopo aver modificato `VITE_API_URL` su Vercel devi fare un nuovo deploy,
+  perché Vite inserisce le variabili ambiente durante la build
 - il file `client/vercel.json` è già configurato per fare fallback a `index.html`
 - questo evita errori `404` quando aggiorni una route come `/cart`, `/my-orders` o `/admin`
 
