@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import api from '../services/api'
 import ProductCard from '../components/ProductCard'
 
 function Home() {
+  const location = useLocation()
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
+  const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -21,6 +23,41 @@ function Home() {
 
     fetchProducts()
   }, [])
+
+  const filteredProducts = useMemo(() => {
+    const query = searchTerm.trim().toLowerCase()
+
+    if (!query) {
+      return products
+    }
+
+    return products.filter((product) => {
+      const price = product.price ?? ''
+      const searchableValues = [
+        product.title,
+        product.name,
+        product.category,
+        product.description,
+        String(price),
+        String(price).replace('.', ','),
+      ]
+
+      return searchableValues.some((value) =>
+        String(value ?? '').toLowerCase().includes(query)
+      )
+    })
+  }, [products, searchTerm])
+
+  useEffect(() => {
+    if (loading || location.hash !== '#products') {
+      return
+    }
+
+    document.getElementById('products')?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    })
+  }, [loading, location.hash])
 
   if (loading) {
     return (
@@ -87,13 +124,48 @@ function Home() {
         </div>
       </section>
 
-      {products.length === 0 ? (
+      <section
+        id="products"
+        className="mb-6 rounded-[28px] border border-white/70 bg-white/90 p-4 shadow-sm sm:p-5"
+      >
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div className="w-full">
+            <label
+              htmlFor="product-search"
+              className="text-sm font-black uppercase tracking-[0.22em] text-stone-700"
+            >
+              Cerca prodotti
+            </label>
+
+            <input
+              id="product-search"
+              type="search"
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+              placeholder="Nome, categoria, descrizione o prezzo"
+              className="mt-3 w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-base font-medium text-stone-900 shadow-sm outline-none transition placeholder:text-stone-400 focus:border-amber-400 focus:ring-4 focus:ring-amber-200/70"
+            />
+          </div>
+
+          {searchTerm && (
+            <button
+              type="button"
+              onClick={() => setSearchTerm('')}
+              className="rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-semibold text-stone-700 transition hover:border-stone-300 hover:bg-stone-50 sm:shrink-0"
+            >
+              Cancella
+            </button>
+          )}
+        </div>
+      </section>
+
+      {filteredProducts.length === 0 ? (
         <section className="rounded-[32px] border border-white/70 bg-white/85 p-6 shadow-lg sm:p-8">
-          <p className="text-sm font-medium text-stone-500">Nessun prodotto trovato</p>
+          <p className="text-sm font-medium text-stone-500">No products found</p>
         </section>
       ) : (
         <section className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {products.map(product => (
+          {filteredProducts.map(product => (
             <ProductCard key={product._id} product={product} />
           ))}
         </section>
