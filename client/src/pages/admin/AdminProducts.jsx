@@ -8,6 +8,96 @@ import { formatCurrency } from '../../utils/formatters'
 
 const PAGE_SIZE = 8
 
+function PaginationControls({ page, totalPages, totalItems, onPrevious, onNext }) {
+  return (
+    <div className="grid min-w-0 grid-cols-[1fr_auto] items-center gap-2 border-t border-stone-200 px-2.5 py-2 sm:px-4 sm:py-2.5">
+      <p className="min-w-0 truncate text-xs font-semibold text-stone-500 sm:text-sm">
+        {page}/{totalPages} · {totalItems} prodotti
+      </p>
+      <div className="flex min-w-0 gap-1">
+        <button
+          type="button"
+          disabled={page === 1}
+          onClick={onPrevious}
+          className="min-h-8 rounded-full border border-stone-200 px-2.5 py-1 text-xs font-black text-stone-700 transition hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-45 sm:min-h-9 sm:px-3 sm:py-1.5"
+        >
+          Prev
+        </button>
+        <button
+          type="button"
+          disabled={page === totalPages}
+          onClick={onNext}
+          className="min-h-8 rounded-full border border-stone-200 px-2.5 py-1 text-xs font-black text-stone-700 transition hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-45 sm:min-h-9 sm:px-3 sm:py-1.5"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  )
+}
+
+function ProductMobileCard({ product, onEdit, onDelete }) {
+  return (
+    <article className="w-full min-w-0 max-w-full rounded-2xl border border-stone-200/80 bg-white p-2.5 shadow-sm">
+      <div className="grid min-w-0 grid-cols-[72px_1fr] gap-3">
+        <img
+          src={product.image || 'https://via.placeholder.com/96?text=No+Image'}
+          alt={product.title}
+          className="h-16 w-16 rounded-xl object-cover"
+        />
+
+        <div className="min-w-0">
+          <p className="line-clamp-2 text-sm font-black leading-snug text-stone-950">
+            {product.title}
+          </p>
+          <p className="mt-1 line-clamp-1 text-xs font-medium text-stone-500">
+            {product.description}
+          </p>
+          <span className="mt-2 inline-flex max-w-full rounded-full bg-stone-100 px-2.5 py-1 text-[11px] font-black uppercase tracking-[0.08em] text-stone-700">
+            <span className="truncate">{product.category}</span>
+          </span>
+        </div>
+      </div>
+
+      <div className="mt-2 grid min-w-0 grid-cols-2 gap-1.5 rounded-2xl bg-stone-50 p-2 ring-1 ring-stone-100">
+        <div className="min-w-0">
+          <p className="text-[10px] font-black uppercase tracking-[0.1em] text-stone-400">
+            Prezzo
+          </p>
+          <p className="mt-0.5 truncate text-sm font-black text-emerald-700">
+            {formatCurrency(product.price)}
+          </p>
+        </div>
+        <div className="min-w-0">
+          <p className="text-[10px] font-black uppercase tracking-[0.1em] text-stone-400">
+            Stock
+          </p>
+          <p className="mt-0.5 truncate text-sm font-black text-stone-950">
+            {product.stock}
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-2 grid grid-cols-2 gap-1.5">
+        <button
+          type="button"
+          onClick={onEdit}
+          className="min-h-8 rounded-full border border-stone-200 px-2.5 py-1 text-xs font-black text-stone-700 transition hover:bg-stone-50"
+        >
+          Edit
+        </button>
+        <button
+          type="button"
+          onClick={onDelete}
+          className="min-h-8 rounded-full bg-red-50 px-2.5 py-1 text-xs font-black text-red-700 transition hover:bg-red-100"
+        >
+          Delete
+        </button>
+      </div>
+    </article>
+  )
+}
+
 function createEmptyProduct() {
   return {
     title: '',
@@ -156,15 +246,15 @@ function AdminProducts() {
   }
 
   return (
-    <>
+    <div className="flex w-full min-w-0 max-w-full flex-col gap-4 overflow-x-hidden">
       <Toast toast={toast} onClose={() => setToast(null)} />
 
-      <section className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
-        <div>
+      <section className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div className="min-w-0">
           <p className="text-xs font-black uppercase tracking-[0.22em] text-emerald-700">
             Products
           </p>
-          <h1 className="mt-2 text-3xl font-black text-stone-950">
+          <h1 className="mt-1 text-2xl font-black text-stone-950 sm:mt-2 sm:text-3xl">
             Gestione prodotti
           </h1>
         </div>
@@ -172,13 +262,13 @@ function AdminProducts() {
         <button
           type="button"
           onClick={openCreateModal}
-          className="inline-flex min-h-11 items-center justify-center rounded-full bg-stone-950 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-emerald-700"
+          className="inline-flex min-h-10 items-center justify-center rounded-full bg-stone-950 px-4 py-2 text-sm font-bold text-white transition hover:bg-emerald-700 sm:min-h-11 sm:px-5 sm:py-2.5"
         >
           Add product
         </button>
       </section>
 
-      <section className="rounded-3xl border border-white/80 bg-white/95 p-4 shadow-[0_14px_45px_rgba(28,25,23,0.06)]">
+      <section className="rounded-2xl border border-white/80 bg-white/95 p-3 shadow-[0_12px_35px_rgba(28,25,23,0.05)] sm:rounded-3xl sm:p-4">
         <input
           type="search"
           value={search}
@@ -187,7 +277,7 @@ function AdminProducts() {
             setPage(1)
           }}
           placeholder="Search prodotti o categorie"
-          className="min-h-12 w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
+          className="min-h-10 w-full min-w-0 rounded-xl border border-stone-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 sm:min-h-12 sm:rounded-2xl sm:px-4 sm:py-3"
         />
       </section>
 
@@ -197,8 +287,19 @@ function AdminProducts() {
           message="Aggiungi un prodotto o modifica la ricerca."
         />
       ) : (
-        <section className="overflow-hidden rounded-3xl border border-white/80 bg-white/95 shadow-[0_18px_60px_rgba(28,25,23,0.08)]">
-          <div className="overflow-x-auto">
+        <section className="min-w-0 overflow-hidden rounded-2xl border border-white/80 bg-white/95 shadow-[0_14px_45px_rgba(28,25,23,0.07)] sm:rounded-3xl">
+          <div className="grid min-w-0 gap-2 p-2 md:hidden">
+            {paginatedProducts.map(product => (
+              <ProductMobileCard
+                key={product._id}
+                product={product}
+                onEdit={() => openEditModal(product)}
+                onDelete={() => setDeleteTarget(product)}
+              />
+            ))}
+          </div>
+
+          <div className="hidden overflow-x-auto md:block">
             <table className="min-w-full divide-y divide-stone-200 text-sm">
               <thead className="bg-stone-50 text-left text-xs font-black uppercase tracking-[0.14em] text-stone-500">
                 <tr>
@@ -259,44 +360,28 @@ function AdminProducts() {
             </table>
           </div>
 
-          <div className="flex flex-col gap-3 border-t border-stone-200 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-sm font-medium text-stone-500">
-              Pagina {page} di {totalPages} · {filteredProducts.length} prodotti
-            </p>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                disabled={page === 1}
-                onClick={() => setPage(prev => Math.max(1, prev - 1))}
-                className="min-h-10 rounded-full border border-stone-200 px-4 py-2 text-sm font-bold text-stone-700 transition hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                Prev
-              </button>
-              <button
-                type="button"
-                disabled={page === totalPages}
-                onClick={() => setPage(prev => Math.min(totalPages, prev + 1))}
-                className="min-h-10 rounded-full border border-stone-200 px-4 py-2 text-sm font-bold text-stone-700 transition hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                Next
-              </button>
-            </div>
-          </div>
+          <PaginationControls
+            page={page}
+            totalPages={totalPages}
+            totalItems={filteredProducts.length}
+            onPrevious={() => setPage(prev => Math.max(1, prev - 1))}
+            onNext={() => setPage(prev => Math.min(totalPages, prev + 1))}
+          />
         </section>
       )}
 
       {modalOpen && (
-        <div className="fixed inset-0 z-40 flex items-center justify-center bg-stone-950/60 px-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-40 flex items-center justify-center overflow-x-hidden bg-stone-950/60 px-3 backdrop-blur-sm sm:px-4">
           <form
             onSubmit={handleSubmit}
-            className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl bg-white p-6 shadow-[0_24px_90px_rgba(28,25,23,0.28)]"
+            className="max-h-[90vh] w-full max-w-2xl min-w-0 overflow-y-auto rounded-2xl bg-white p-4 shadow-[0_24px_90px_rgba(28,25,23,0.28)] sm:rounded-3xl sm:p-6"
           >
             <div className="flex items-start justify-between gap-4">
-              <div>
+              <div className="min-w-0">
                 <p className="text-xs font-black uppercase tracking-[0.18em] text-stone-400">
                   {editingProduct ? 'Edit product' : 'Add product'}
                 </p>
-                <h2 className="mt-1 text-2xl font-black text-stone-950">
+                <h2 className="mt-1 text-xl font-black text-stone-950 sm:text-2xl">
                   {editingProduct ? 'Modifica prodotto' : 'Nuovo prodotto'}
                 </h2>
               </div>
@@ -416,7 +501,7 @@ function AdminProducts() {
         onCancel={() => setDeleteTarget(null)}
         onConfirm={handleDeleteProduct}
       />
-    </>
+    </div>
   )
 }
 
