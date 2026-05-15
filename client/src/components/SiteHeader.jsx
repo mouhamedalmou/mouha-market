@@ -9,9 +9,30 @@ import {
 } from '../services/session'
 
 const navLinkBase =
-  'inline-flex min-h-10 items-center rounded-full px-4 py-2 text-sm font-bold transition duration-200'
+  'inline-flex min-h-10 items-center rounded-full px-4 py-2 text-sm font-bold transition duration-200 hover:-translate-y-0.5 hover:shadow-sm'
 const mobileLinkBase =
   'flex min-h-12 items-center justify-between rounded-2xl px-4 py-3 text-base font-bold transition duration-200'
+
+function OrdersIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      className="h-5 w-5"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M8 2v4" />
+      <path d="M16 2v4" />
+      <rect width="18" height="18" x="3" y="4" rx="2" />
+      <path d="M3 10h18" />
+      <path d="m9 16 2 2 4-4" />
+    </svg>
+  )
+}
 
 function CartIcon() {
   return (
@@ -83,6 +104,18 @@ function SiteHeader() {
         ? 'bg-stone-950 text-white shadow-sm'
         : 'text-stone-600 hover:bg-stone-100 hover:text-stone-950'
     }`
+  const ordersLinkClassName = ({ isActive }) =>
+    `${navLinkBase} ${
+      isActive
+        ? 'bg-blue-600 text-white shadow-sm'
+        : 'bg-blue-50 text-blue-800 ring-1 ring-blue-100 hover:bg-blue-100'
+    }`
+  const cartLinkClassName = ({ isActive }) =>
+    `${navLinkBase} ${
+      isActive
+        ? 'bg-emerald-600 text-white shadow-sm'
+        : 'bg-emerald-50 text-emerald-800 ring-1 ring-emerald-100 hover:bg-emerald-100'
+    }`
   const mobileLinkClassName = ({ isActive }) =>
     `${mobileLinkBase} ${
       isActive
@@ -151,8 +184,11 @@ function SiteHeader() {
             </NavLink>
 
             {loggedIn && (
-              <NavLink to="/my-orders" className={linkClassName}>
-                I miei ordini
+              <NavLink to="/my-orders" className={ordersLinkClassName}>
+                <span className="inline-flex items-center gap-2">
+                  <OrdersIcon />
+                  <span>I miei ordini</span>
+                </span>
               </NavLink>
             )}
 
@@ -162,7 +198,7 @@ function SiteHeader() {
               </NavLink>
             )}
 
-            <NavLink to="/cart" className={linkClassName}>
+            <NavLink to="/cart" className={cartLinkClassName}>
               <span className="inline-flex items-center gap-2">
                 <CartIcon />
                 <span>Carrello</span>
@@ -232,7 +268,10 @@ function SiteHeader() {
                 onClick={closeMobileMenu}
                 className={mobileLinkClassName}
               >
-                I miei ordini
+                <span className="inline-flex items-center gap-2">
+                  <OrdersIcon />
+                  I miei ordini
+                </span>
               </NavLink>
             )}
 
