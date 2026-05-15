@@ -24,16 +24,16 @@ function getOrderPieces(order) {
 
 function PaginationControls({ page, totalPages, totalItems, onPrevious, onNext }) {
   return (
-    <div className="flex items-center justify-between gap-2 border-t border-stone-200 px-3 py-2.5 sm:px-4">
+    <div className="grid min-w-0 grid-cols-[1fr_auto] items-center gap-2 border-t border-stone-200 px-2.5 py-2 sm:px-4 sm:py-2.5">
       <p className="min-w-0 truncate text-xs font-semibold text-stone-500 sm:text-sm">
         {page}/{totalPages} · {totalItems} ordini
       </p>
-      <div className="flex shrink-0 gap-1.5">
+      <div className="flex min-w-0 gap-1">
         <button
           type="button"
           disabled={page === 1}
           onClick={onPrevious}
-          className="min-h-9 rounded-full border border-stone-200 px-3 py-1.5 text-xs font-black text-stone-700 transition hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-45"
+          className="min-h-8 rounded-full border border-stone-200 px-2.5 py-1 text-xs font-black text-stone-700 transition hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-45 sm:min-h-9 sm:px-3 sm:py-1.5"
         >
           Prev
         </button>
@@ -41,7 +41,7 @@ function PaginationControls({ page, totalPages, totalItems, onPrevious, onNext }
           type="button"
           disabled={page === totalPages}
           onClick={onNext}
-          className="min-h-9 rounded-full border border-stone-200 px-3 py-1.5 text-xs font-black text-stone-700 transition hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-45"
+          className="min-h-8 rounded-full border border-stone-200 px-2.5 py-1 text-xs font-black text-stone-700 transition hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-45 sm:min-h-9 sm:px-3 sm:py-1.5"
         >
           Next
         </button>
@@ -52,9 +52,9 @@ function PaginationControls({ page, totalPages, totalItems, onPrevious, onNext }
 
 function MobileOrderCard({ order, updatingStatusId, onView, onStatusChange, onDelete }) {
   return (
-    <article className="min-w-0 rounded-2xl border border-stone-200/80 bg-white p-3 shadow-sm">
-      <div className="flex min-w-0 items-start justify-between gap-2">
-        <div className="min-w-0">
+    <article className="w-full min-w-0 max-w-full rounded-2xl border border-stone-200/80 bg-white p-2.5 shadow-sm">
+      <div className="min-w-0">
+        <div className="min-w-0 border-b border-stone-100 pb-2">
           <p className="truncate text-xs font-black uppercase tracking-[0.12em] text-stone-400">
             #{order._id.slice(-8).toUpperCase()}
           </p>
@@ -65,12 +65,12 @@ function MobileOrderCard({ order, updatingStatusId, onView, onStatusChange, onDe
             {order.user?.email || 'Email non disponibile'}
           </p>
         </div>
-        <div className="shrink-0">
+        <div className="mt-2 flex max-w-full">
           <StatusBadge value={order.status} />
         </div>
       </div>
 
-      <div className="mt-3 grid grid-cols-3 gap-2 rounded-2xl bg-stone-50 p-2 ring-1 ring-stone-100">
+      <div className="mt-2 grid min-w-0 grid-cols-1 gap-1.5 rounded-2xl bg-stone-50 p-2 ring-1 ring-stone-100 min-[360px]:grid-cols-3">
         <div className="min-w-0">
           <p className="text-[10px] font-black uppercase tracking-[0.1em] text-stone-400">
             Totale
@@ -95,18 +95,18 @@ function MobileOrderCard({ order, updatingStatusId, onView, onStatusChange, onDe
         </div>
       </div>
 
-      <div className="mt-3 grid grid-cols-2 gap-2">
+      <div className="mt-2 grid min-w-0 grid-cols-2 gap-1.5">
         <button
           type="button"
           onClick={onView}
-          className="min-h-9 rounded-full border border-stone-200 px-3 py-1.5 text-xs font-black text-stone-700 transition hover:bg-stone-50"
+          className="min-h-8 rounded-full border border-stone-200 px-2.5 py-1 text-xs font-black text-stone-700 transition hover:bg-stone-50"
         >
           View
         </button>
         <button
           type="button"
           onClick={onDelete}
-          className="min-h-9 rounded-full bg-red-50 px-3 py-1.5 text-xs font-black text-red-700 transition hover:bg-red-100"
+          className="min-h-8 rounded-full bg-red-50 px-2.5 py-1 text-xs font-black text-red-700 transition hover:bg-red-100"
         >
           Delete
         </button>
@@ -114,7 +114,7 @@ function MobileOrderCard({ order, updatingStatusId, onView, onStatusChange, onDe
           value={order.status}
           disabled={updatingStatusId === order._id}
           onChange={event => onStatusChange(event.target.value)}
-          className="col-span-2 min-h-9 min-w-0 rounded-full border border-stone-200 bg-white px-3 py-1.5 text-xs font-black text-stone-700 outline-none transition focus:border-emerald-500 disabled:opacity-50"
+          className="col-span-2 min-h-8 min-w-0 rounded-full border border-stone-200 bg-white px-2.5 py-1 text-xs font-black text-stone-700 outline-none transition focus:border-emerald-500 disabled:opacity-50"
         >
           {ORDER_STATUSES.map(status => (
             <option key={status} value={status}>
@@ -294,7 +294,7 @@ function AdminOrders() {
   }
 
   return (
-    <>
+    <div className="flex w-full min-w-0 max-w-full flex-col gap-4 overflow-x-hidden">
       <Toast toast={toast} onClose={() => setToast(null)} />
 
       <section className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
@@ -353,7 +353,7 @@ function AdminOrders() {
         />
       ) : (
         <section className="min-w-0 overflow-hidden rounded-2xl border border-white/80 bg-white/95 shadow-[0_14px_45px_rgba(28,25,23,0.07)] sm:rounded-3xl">
-          <div className="grid gap-2 p-2 md:hidden">
+          <div className="grid min-w-0 gap-2 p-2 lg:hidden">
             {paginatedOrders.map(order => (
               <MobileOrderCard
                 key={order._id}
@@ -366,7 +366,7 @@ function AdminOrders() {
             ))}
           </div>
 
-          <div className="hidden overflow-x-auto md:block">
+          <div className="hidden overflow-x-auto lg:block">
             <table className="min-w-full divide-y divide-stone-200 text-sm">
               <thead className="bg-stone-50 text-left text-xs font-black uppercase tracking-[0.14em] text-stone-500">
                 <tr>
@@ -660,7 +660,7 @@ function AdminOrders() {
         onCancel={() => setDeleteTarget(null)}
         onConfirm={handleDeleteOrder}
       />
-    </>
+    </div>
   )
 }
 
