@@ -56,7 +56,7 @@ function AdminDashboard() {
 
       <section className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-xs font-black uppercase tracking-[0.24em] text-emerald-700">
+          <p className="text-xs font-black uppercase tracking-[0.22em] text-emerald-700">
             Overview
           </p>
           <h1 className="mt-2 text-3xl font-black text-stone-950">
@@ -93,10 +93,10 @@ function AdminDashboard() {
       </section>
 
       <section className="grid gap-6 xl:grid-cols-[1.35fr_0.65fr]">
-        <div className="rounded-lg border border-stone-200 bg-white p-5 shadow-sm">
+        <div className="rounded-3xl border border-white/80 bg-white/95 p-5 shadow-[0_18px_60px_rgba(28,25,23,0.08)]">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-xs font-black uppercase tracking-[0.18em] text-stone-400">
+              <p className="text-xs font-black uppercase tracking-[0.16em] text-stone-400">
                 Revenue chart
               </p>
               <h2 className="mt-1 text-xl font-black text-stone-950">
@@ -121,6 +121,11 @@ function AdminDashboard() {
                   tickFormatter={value => formatCurrency(value).replace(',00', '')}
                 />
                 <Tooltip
+                  contentStyle={{
+                    borderRadius: 18,
+                    borderColor: '#e7e5e4',
+                    boxShadow: '0 18px 50px rgba(28,25,23,0.12)',
+                  }}
                   formatter={(value, name) => [
                     name === 'revenue' ? formatCurrency(value) : value,
                     name === 'revenue' ? 'Revenue' : 'Orders',
@@ -138,8 +143,8 @@ function AdminDashboard() {
           </div>
         </div>
 
-        <div className="rounded-lg border border-stone-200 bg-white p-5 shadow-sm">
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-stone-400">
+        <div className="rounded-3xl border border-white/80 bg-white/95 p-5 shadow-[0_18px_60px_rgba(28,25,23,0.08)]">
+          <p className="text-xs font-black uppercase tracking-[0.16em] text-stone-400">
             Recent orders
           </p>
           <h2 className="mt-1 text-xl font-black text-stone-950">Ultimi ordini</h2>
@@ -149,7 +154,7 @@ function AdminDashboard() {
               stats.recentOrders.map(order => (
                 <article
                   key={order._id}
-                  className="rounded-lg border border-stone-100 bg-stone-50 p-3"
+                  className="rounded-2xl border border-stone-100 bg-stone-50 p-4"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">

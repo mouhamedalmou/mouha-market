@@ -190,7 +190,7 @@ function AdminOrders() {
 
       <section className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
         <div>
-          <p className="text-xs font-black uppercase tracking-[0.24em] text-emerald-700">
+          <p className="text-xs font-black uppercase tracking-[0.22em] text-emerald-700">
             Orders
           </p>
           <h1 className="mt-2 text-3xl font-black text-stone-950">Gestione ordini</h1>
@@ -199,13 +199,13 @@ function AdminOrders() {
         <button
           type="button"
           onClick={() => setManualModalOpen(true)}
-          className="rounded-lg bg-stone-950 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-stone-800"
+          className="inline-flex min-h-11 items-center justify-center rounded-full bg-stone-950 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-emerald-700"
         >
           Add order
         </button>
       </section>
 
-      <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
+      <section className="rounded-3xl border border-white/80 bg-white/95 p-4 shadow-[0_14px_45px_rgba(28,25,23,0.06)]">
         <div className="grid gap-3 lg:grid-cols-[1fr_220px]">
           <input
             type="search"
@@ -215,7 +215,7 @@ function AdminOrders() {
               setPage(1)
             }}
             placeholder="Search ordini, clienti, email"
-            className="rounded-lg border border-stone-200 px-3 py-2.5 text-sm outline-none transition focus:border-emerald-500"
+            className="min-h-12 rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
           />
           <select
             value={statusFilter}
@@ -223,7 +223,7 @@ function AdminOrders() {
               setStatusFilter(event.target.value)
               setPage(1)
             }}
-            className="rounded-lg border border-stone-200 px-3 py-2.5 text-sm font-semibold outline-none transition focus:border-emerald-500"
+            className="min-h-12 rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-bold outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
           >
             <option value="all">Tutti gli status</option>
             {ORDER_STATUSES.map(status => (
@@ -241,7 +241,7 @@ function AdminOrders() {
           message="Modifica search o filtro status per ampliare i risultati."
         />
       ) : (
-        <section className="overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm">
+        <section className="overflow-hidden rounded-3xl border border-white/80 bg-white/95 shadow-[0_18px_60px_rgba(28,25,23,0.08)]">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-stone-200 text-sm">
               <thead className="bg-stone-50 text-left text-xs font-black uppercase tracking-[0.14em] text-stone-500">
@@ -282,7 +282,7 @@ function AdminOrders() {
                         <button
                           type="button"
                           onClick={() => setSelectedOrder(order)}
-                          className="rounded-lg border border-stone-200 px-3 py-2 text-xs font-bold text-stone-700 transition hover:bg-stone-50"
+                          className="rounded-full border border-stone-200 px-3 py-2 text-xs font-bold text-stone-700 transition hover:bg-stone-50"
                         >
                           View
                         </button>
@@ -290,7 +290,7 @@ function AdminOrders() {
                           value={order.status}
                           disabled={updatingStatusId === order._id}
                           onChange={event => handleStatusChange(order._id, event.target.value)}
-                          className="rounded-lg border border-stone-200 px-2 py-2 text-xs font-bold text-stone-700 outline-none transition focus:border-emerald-500 disabled:opacity-50"
+                          className="rounded-full border border-stone-200 px-3 py-2 text-xs font-bold text-stone-700 outline-none transition focus:border-emerald-500 disabled:opacity-50"
                         >
                           {ORDER_STATUSES.map(status => (
                             <option key={status} value={status}>
@@ -301,7 +301,7 @@ function AdminOrders() {
                         <button
                           type="button"
                           onClick={() => setDeleteTarget(order)}
-                          className="rounded-lg bg-red-50 px-3 py-2 text-xs font-bold text-red-700 transition hover:bg-red-100"
+                          className="rounded-full bg-red-50 px-3 py-2 text-xs font-bold text-red-700 transition hover:bg-red-100"
                         >
                           Delete
                         </button>
@@ -322,7 +322,7 @@ function AdminOrders() {
                 type="button"
                 disabled={page === 1}
                 onClick={() => setPage(prev => Math.max(1, prev - 1))}
-                className="rounded-lg border border-stone-200 px-3 py-2 text-sm font-bold text-stone-700 transition hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-50"
+                className="min-h-10 rounded-full border border-stone-200 px-4 py-2 text-sm font-bold text-stone-700 transition hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Prev
               </button>
@@ -330,7 +330,7 @@ function AdminOrders() {
                 type="button"
                 disabled={page === totalPages}
                 onClick={() => setPage(prev => Math.min(totalPages, prev + 1))}
-                className="rounded-lg border border-stone-200 px-3 py-2 text-sm font-bold text-stone-700 transition hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-50"
+                className="min-h-10 rounded-full border border-stone-200 px-4 py-2 text-sm font-bold text-stone-700 transition hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Next
               </button>
@@ -340,8 +340,8 @@ function AdminOrders() {
       )}
 
       {selectedOrder && (
-        <div className="fixed inset-0 z-40 flex items-center justify-center bg-stone-950/55 px-4">
-          <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-lg bg-white p-6 shadow-2xl">
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-stone-950/60 px-4 backdrop-blur-sm">
+          <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl bg-white p-6 shadow-[0_24px_90px_rgba(28,25,23,0.28)]">
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-xs font-black uppercase tracking-[0.18em] text-stone-400">
@@ -354,7 +354,7 @@ function AdminOrders() {
               <button
                 type="button"
                 onClick={() => setSelectedOrder(null)}
-                className="rounded-lg border border-stone-200 px-3 py-2 text-sm font-bold text-stone-700"
+                className="min-h-10 rounded-full border border-stone-200 px-3 py-2 text-sm font-bold text-stone-700"
                 aria-label="Chiudi dettaglio ordine"
               >
                 ×
@@ -362,7 +362,7 @@ function AdminOrders() {
             </div>
 
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
-              <div className="rounded-lg bg-stone-50 p-4">
+              <div className="rounded-2xl bg-stone-50 p-4">
                 <p className="text-xs font-black uppercase tracking-[0.14em] text-stone-400">
                   Customer
                 </p>
@@ -373,7 +373,7 @@ function AdminOrders() {
                   {selectedOrder.user?.email || 'Email non disponibile'}
                 </p>
               </div>
-              <div className="rounded-lg bg-stone-50 p-4">
+              <div className="rounded-2xl bg-stone-50 p-4">
                 <p className="text-xs font-black uppercase tracking-[0.14em] text-stone-400">
                   Totale
                 </p>
@@ -387,12 +387,12 @@ function AdminOrders() {
               {selectedOrder.items.map(item => (
                 <div
                   key={`${selectedOrder._id}-${item.productId}`}
-                  className="flex flex-col gap-3 rounded-lg border border-stone-200 p-3 sm:flex-row sm:items-center"
+                  className="flex flex-col gap-3 rounded-2xl border border-stone-200 p-3 sm:flex-row sm:items-center"
                 >
                   <img
                     src={item.image || 'https://via.placeholder.com/80?text=No+Image'}
                     alt={item.title}
-                    className="h-20 w-full rounded-lg object-cover sm:w-20"
+                    className="h-20 w-full rounded-2xl object-cover sm:w-20"
                   />
                   <div className="flex-1">
                     <p className="font-bold text-stone-950">{item.title}</p>
@@ -409,10 +409,10 @@ function AdminOrders() {
       )}
 
       {manualModalOpen && (
-        <div className="fixed inset-0 z-40 flex items-center justify-center bg-stone-950/55 px-4">
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-stone-950/60 px-4 backdrop-blur-sm">
           <form
             onSubmit={handleManualSubmit}
-            className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-lg bg-white p-6 shadow-2xl"
+            className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-3xl bg-white p-6 shadow-[0_24px_90px_rgba(28,25,23,0.28)]"
           >
             <div className="flex items-start justify-between gap-4">
               <div>
@@ -425,7 +425,7 @@ function AdminOrders() {
                 type="button"
                 onClick={() => setManualModalOpen(false)}
                 disabled={creatingOrder}
-                className="rounded-lg border border-stone-200 px-3 py-2 text-sm font-bold text-stone-700 disabled:opacity-50"
+                className="min-h-10 rounded-full border border-stone-200 px-3 py-2 text-sm font-bold text-stone-700 disabled:opacity-50"
                 aria-label="Chiudi creazione ordine"
               >
                 ×
@@ -441,7 +441,7 @@ function AdminOrders() {
                     setManualForm(prev => ({ ...prev, userId: event.target.value }))
                   }
                   required
-                  className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2.5 text-sm font-medium outline-none focus:border-emerald-500"
+                  className="mt-2 min-h-12 w-full rounded-2xl border border-stone-200 px-4 py-3 text-sm font-medium outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
                 >
                   <option value="">Seleziona cliente</option>
                   {users.map(user => (
@@ -459,7 +459,7 @@ function AdminOrders() {
                   onChange={event =>
                     setManualForm(prev => ({ ...prev, status: event.target.value }))
                   }
-                  className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2.5 text-sm font-medium outline-none focus:border-emerald-500"
+                  className="mt-2 min-h-12 w-full rounded-2xl border border-stone-200 px-4 py-3 text-sm font-medium outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
                 >
                   {ORDER_STATUSES.map(status => (
                     <option key={status} value={status}>
@@ -472,12 +472,12 @@ function AdminOrders() {
 
             <div className="mt-5 space-y-3">
               {manualForm.items.map((item, index) => (
-                <div key={index} className="grid gap-3 rounded-lg bg-stone-50 p-3 md:grid-cols-[1fr_120px_auto]">
+                <div key={index} className="grid gap-3 rounded-2xl bg-stone-50 p-3 md:grid-cols-[1fr_120px_auto]">
                   <select
                     value={item.productId}
                     onChange={event => updateManualItem(index, 'productId', event.target.value)}
                     required
-                    className="rounded-lg border border-stone-200 px-3 py-2.5 text-sm font-medium outline-none focus:border-emerald-500"
+                    className="min-h-12 rounded-2xl border border-stone-200 px-4 py-3 text-sm font-medium outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
                   >
                     <option value="">Prodotto</option>
                     {products.map(product => (
@@ -493,14 +493,14 @@ function AdminOrders() {
                     value={item.quantity}
                     onChange={event => updateManualItem(index, 'quantity', event.target.value)}
                     required
-                    className="rounded-lg border border-stone-200 px-3 py-2.5 text-sm font-medium outline-none focus:border-emerald-500"
+                    className="min-h-12 rounded-2xl border border-stone-200 px-4 py-3 text-sm font-medium outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
                   />
 
                   <button
                     type="button"
                     onClick={() => removeManualItem(index)}
                     disabled={manualForm.items.length === 1}
-                    className="rounded-lg bg-red-50 px-3 py-2.5 text-sm font-bold text-red-700 transition hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="min-h-12 rounded-full bg-red-50 px-4 py-2.5 text-sm font-bold text-red-700 transition hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     Remove
                   </button>
@@ -512,7 +512,7 @@ function AdminOrders() {
               <button
                 type="button"
                 onClick={addManualItem}
-                className="rounded-lg border border-stone-200 px-4 py-2.5 text-sm font-bold text-stone-700 transition hover:bg-stone-50"
+                className="min-h-11 rounded-full border border-stone-200 px-4 py-2.5 text-sm font-bold text-stone-700 transition hover:bg-stone-50"
               >
                 Add product
               </button>
@@ -526,14 +526,14 @@ function AdminOrders() {
                 type="button"
                 onClick={() => setManualModalOpen(false)}
                 disabled={creatingOrder}
-                className="rounded-lg border border-stone-200 px-4 py-2.5 text-sm font-bold text-stone-700 transition hover:bg-stone-50 disabled:opacity-50"
+                className="min-h-11 rounded-full border border-stone-200 px-4 py-2.5 text-sm font-bold text-stone-700 transition hover:bg-stone-50 disabled:opacity-50"
               >
                 Annulla
               </button>
               <button
                 type="submit"
                 disabled={creatingOrder}
-                className="rounded-lg bg-stone-950 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-stone-800 disabled:cursor-not-allowed disabled:opacity-50"
+                className="min-h-11 rounded-full bg-stone-950 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {creatingOrder ? 'Creazione...' : 'Crea ordine'}
               </button>

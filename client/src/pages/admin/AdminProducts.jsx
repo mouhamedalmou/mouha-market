@@ -161,7 +161,7 @@ function AdminProducts() {
 
       <section className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
         <div>
-          <p className="text-xs font-black uppercase tracking-[0.24em] text-emerald-700">
+          <p className="text-xs font-black uppercase tracking-[0.22em] text-emerald-700">
             Products
           </p>
           <h1 className="mt-2 text-3xl font-black text-stone-950">
@@ -172,13 +172,13 @@ function AdminProducts() {
         <button
           type="button"
           onClick={openCreateModal}
-          className="rounded-lg bg-stone-950 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-stone-800"
+          className="inline-flex min-h-11 items-center justify-center rounded-full bg-stone-950 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-emerald-700"
         >
           Add product
         </button>
       </section>
 
-      <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
+      <section className="rounded-3xl border border-white/80 bg-white/95 p-4 shadow-[0_14px_45px_rgba(28,25,23,0.06)]">
         <input
           type="search"
           value={search}
@@ -187,7 +187,7 @@ function AdminProducts() {
             setPage(1)
           }}
           placeholder="Search prodotti o categorie"
-          className="w-full rounded-lg border border-stone-200 px-3 py-2.5 text-sm outline-none transition focus:border-emerald-500"
+          className="min-h-12 w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
         />
       </section>
 
@@ -197,7 +197,7 @@ function AdminProducts() {
           message="Aggiungi un prodotto o modifica la ricerca."
         />
       ) : (
-        <section className="overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm">
+        <section className="overflow-hidden rounded-3xl border border-white/80 bg-white/95 shadow-[0_18px_60px_rgba(28,25,23,0.08)]">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-stone-200 text-sm">
               <thead className="bg-stone-50 text-left text-xs font-black uppercase tracking-[0.14em] text-stone-500">
@@ -217,7 +217,7 @@ function AdminProducts() {
                       <img
                         src={product.image || 'https://via.placeholder.com/80?text=No+Image'}
                         alt={product.title}
-                        className="h-14 w-16 rounded-lg object-cover"
+                        className="h-14 w-16 rounded-2xl object-cover"
                       />
                     </td>
                     <td className="px-4 py-3">
@@ -231,7 +231,7 @@ function AdminProducts() {
                     </td>
                     <td className="px-4 py-3 font-bold text-stone-700">{product.stock}</td>
                     <td className="px-4 py-3">
-                      <span className="rounded-md bg-stone-100 px-2.5 py-1 text-xs font-black uppercase tracking-[0.12em] text-stone-700">
+                      <span className="rounded-full bg-stone-100 px-2.5 py-1 text-xs font-black uppercase tracking-[0.12em] text-stone-700">
                         {product.category}
                       </span>
                     </td>
@@ -240,14 +240,14 @@ function AdminProducts() {
                         <button
                           type="button"
                           onClick={() => openEditModal(product)}
-                          className="rounded-lg border border-stone-200 px-3 py-2 text-xs font-bold text-stone-700 transition hover:bg-stone-50"
+                          className="rounded-full border border-stone-200 px-3 py-2 text-xs font-bold text-stone-700 transition hover:bg-stone-50"
                         >
                           Edit
                         </button>
                         <button
                           type="button"
                           onClick={() => setDeleteTarget(product)}
-                          className="rounded-lg bg-red-50 px-3 py-2 text-xs font-bold text-red-700 transition hover:bg-red-100"
+                          className="rounded-full bg-red-50 px-3 py-2 text-xs font-bold text-red-700 transition hover:bg-red-100"
                         >
                           Delete
                         </button>
@@ -268,7 +268,7 @@ function AdminProducts() {
                 type="button"
                 disabled={page === 1}
                 onClick={() => setPage(prev => Math.max(1, prev - 1))}
-                className="rounded-lg border border-stone-200 px-3 py-2 text-sm font-bold text-stone-700 transition hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-50"
+                className="min-h-10 rounded-full border border-stone-200 px-4 py-2 text-sm font-bold text-stone-700 transition hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Prev
               </button>
@@ -276,7 +276,7 @@ function AdminProducts() {
                 type="button"
                 disabled={page === totalPages}
                 onClick={() => setPage(prev => Math.min(totalPages, prev + 1))}
-                className="rounded-lg border border-stone-200 px-3 py-2 text-sm font-bold text-stone-700 transition hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-50"
+                className="min-h-10 rounded-full border border-stone-200 px-4 py-2 text-sm font-bold text-stone-700 transition hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Next
               </button>
@@ -286,10 +286,10 @@ function AdminProducts() {
       )}
 
       {modalOpen && (
-        <div className="fixed inset-0 z-40 flex items-center justify-center bg-stone-950/55 px-4">
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-stone-950/60 px-4 backdrop-blur-sm">
           <form
             onSubmit={handleSubmit}
-            className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-lg bg-white p-6 shadow-2xl"
+            className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl bg-white p-6 shadow-[0_24px_90px_rgba(28,25,23,0.28)]"
           >
             <div className="flex items-start justify-between gap-4">
               <div>
@@ -304,7 +304,7 @@ function AdminProducts() {
                 type="button"
                 onClick={() => setModalOpen(false)}
                 disabled={saving}
-                className="rounded-lg border border-stone-200 px-3 py-2 text-sm font-bold text-stone-700 disabled:opacity-50"
+                className="min-h-10 rounded-full border border-stone-200 px-3 py-2 text-sm font-bold text-stone-700 disabled:opacity-50"
                 aria-label="Chiudi form prodotto"
               >
                 ×
@@ -319,7 +319,7 @@ function AdminProducts() {
                   value={productForm.title}
                   onChange={handleFormChange}
                   required
-                  className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2.5 text-sm font-medium outline-none focus:border-emerald-500"
+                  className="mt-2 min-h-12 w-full rounded-2xl border border-stone-200 px-4 py-3 text-sm font-medium outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
                 />
               </label>
 
@@ -330,7 +330,7 @@ function AdminProducts() {
                   value={productForm.category}
                   onChange={handleFormChange}
                   required
-                  className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2.5 text-sm font-medium outline-none focus:border-emerald-500"
+                  className="mt-2 min-h-12 w-full rounded-2xl border border-stone-200 px-4 py-3 text-sm font-medium outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
                 />
               </label>
 
@@ -344,7 +344,7 @@ function AdminProducts() {
                   value={productForm.price}
                   onChange={handleFormChange}
                   required
-                  className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2.5 text-sm font-medium outline-none focus:border-emerald-500"
+                  className="mt-2 min-h-12 w-full rounded-2xl border border-stone-200 px-4 py-3 text-sm font-medium outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
                 />
               </label>
 
@@ -358,7 +358,7 @@ function AdminProducts() {
                   value={productForm.stock}
                   onChange={handleFormChange}
                   required
-                  className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2.5 text-sm font-medium outline-none focus:border-emerald-500"
+                  className="mt-2 min-h-12 w-full rounded-2xl border border-stone-200 px-4 py-3 text-sm font-medium outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
                 />
               </label>
             </div>
@@ -371,7 +371,7 @@ function AdminProducts() {
                 value={productForm.image}
                 onChange={handleFormChange}
                 placeholder="https://..."
-                className="mt-1 w-full rounded-lg border border-stone-200 px-3 py-2.5 text-sm font-medium outline-none focus:border-emerald-500"
+                className="mt-2 min-h-12 w-full rounded-2xl border border-stone-200 px-4 py-3 text-sm font-medium outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
               />
             </label>
 
@@ -383,7 +383,7 @@ function AdminProducts() {
                 onChange={handleFormChange}
                 required
                 rows="4"
-                className="mt-1 w-full resize-none rounded-lg border border-stone-200 px-3 py-2.5 text-sm font-medium outline-none focus:border-emerald-500"
+                className="mt-2 w-full resize-none rounded-2xl border border-stone-200 px-4 py-3 text-sm font-medium outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
               />
             </label>
 
@@ -392,14 +392,14 @@ function AdminProducts() {
                 type="button"
                 onClick={() => setModalOpen(false)}
                 disabled={saving}
-                className="rounded-lg border border-stone-200 px-4 py-2.5 text-sm font-bold text-stone-700 transition hover:bg-stone-50 disabled:opacity-50"
+                className="min-h-11 rounded-full border border-stone-200 px-4 py-2.5 text-sm font-bold text-stone-700 transition hover:bg-stone-50 disabled:opacity-50"
               >
                 Annulla
               </button>
               <button
                 type="submit"
                 disabled={saving}
-                className="rounded-lg bg-stone-950 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-stone-800 disabled:cursor-not-allowed disabled:opacity-50"
+                className="min-h-11 rounded-full bg-stone-950 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {saving ? 'Salvataggio...' : 'Salva prodotto'}
               </button>

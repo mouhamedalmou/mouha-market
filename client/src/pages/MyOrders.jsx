@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import api from '../services/api'
+import LoadingState from '../components/LoadingState'
 import { isAuthenticated } from '../services/session'
 import { formatCurrency, formatOrderDate } from '../utils/formatters'
 
 const statusStyles = {
-  pending: 'bg-amber-100 text-amber-700',
-  paid: 'bg-emerald-100 text-emerald-700',
-  shipped: 'bg-sky-100 text-sky-700',
-  delivered: 'bg-stone-900 text-white',
+  pending: 'bg-amber-50 text-amber-800 ring-amber-100',
+  paid: 'bg-emerald-50 text-emerald-800 ring-emerald-100',
+  shipped: 'bg-sky-50 text-sky-800 ring-sky-100',
+  delivered: 'bg-stone-950 text-white ring-stone-950',
 }
 
 function MyOrders() {
@@ -48,23 +49,23 @@ function MyOrders() {
 
   if (!loggedIn) {
     return (
-      <section className="rounded-[32px] border border-white/70 bg-white/85 p-6 shadow-lg sm:p-8">
-        <h1 className="text-3xl font-black text-stone-900">I miei ordini</h1>
+      <section className="rounded-3xl border border-white/80 bg-white/90 p-6 shadow-[0_18px_60px_rgba(28,25,23,0.08)] sm:p-8">
+        <h1 className="text-3xl font-black text-stone-950">I miei ordini</h1>
         <p className="mt-3 max-w-xl text-sm leading-6 text-stone-600 sm:text-base">
           Devi accedere per vedere lo storico degli ordini e seguire i tuoi acquisti.
         </p>
 
-        <div className="mt-6 flex flex-wrap gap-3">
+        <div className="mt-6 flex flex-col gap-3 min-[420px]:flex-row">
           <Link
             to="/auth"
-            className="rounded-full bg-stone-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-stone-700"
+            className="inline-flex min-h-12 items-center justify-center rounded-full bg-stone-950 px-5 py-3 text-sm font-bold text-white transition hover:bg-emerald-700"
           >
             Accedi ora
           </Link>
 
           <Link
             to="/"
-            className="rounded-full border border-stone-200 bg-white px-5 py-3 text-sm font-semibold text-stone-700 transition hover:border-stone-300 hover:bg-stone-50"
+            className="inline-flex min-h-12 items-center justify-center rounded-full border border-stone-200 bg-white px-5 py-3 text-sm font-bold text-stone-700 transition hover:border-stone-300 hover:bg-stone-50"
           >
             Torna ai prodotti
           </Link>
@@ -75,21 +76,22 @@ function MyOrders() {
 
   if (loading) {
     return (
-      <section className="rounded-[32px] border border-white/70 bg-white/85 p-6 shadow-lg sm:p-8">
-        <p className="text-sm font-medium text-stone-500">Sto caricando i tuoi ordini...</p>
-      </section>
+      <LoadingState
+        label="Sto caricando i tuoi ordini..."
+        helper="Recuperiamo storico acquisti, stati e riepiloghi."
+      />
     )
   }
 
   return (
     <>
-      <section className="mb-6 rounded-[32px] border border-white/70 bg-white/85 p-6 shadow-lg sm:p-8">
+      <section className="mb-6 rounded-3xl border border-white/80 bg-white/90 p-6 shadow-[0_18px_60px_rgba(28,25,23,0.08)] sm:p-8">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-amber-700">
+            <p className="text-xs font-black uppercase tracking-[0.22em] text-emerald-700">
               Storico acquisti
             </p>
-            <h1 className="mt-2 text-3xl font-black text-stone-900 sm:text-4xl">
+            <h1 className="mt-2 text-3xl font-black text-stone-950 sm:text-4xl">
               I miei ordini
             </h1>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-stone-600 sm:text-base">
@@ -97,8 +99,8 @@ function MyOrders() {
             </p>
           </div>
 
-          <div className="rounded-3xl bg-stone-900 px-5 py-4 text-white shadow-sm">
-            <p className="text-xs uppercase tracking-[0.24em] text-stone-300">
+          <div className="rounded-3xl bg-stone-950 px-5 py-4 text-white shadow-sm">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-stone-300">
               Ordini registrati
             </p>
             <p className="mt-2 text-3xl font-black">{orders.length}</p>
@@ -106,22 +108,22 @@ function MyOrders() {
         </div>
 
         {message && (
-          <p className="mt-5 rounded-2xl bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-700">
+          <p className="mt-5 rounded-2xl bg-emerald-50 px-4 py-3 text-sm font-bold text-emerald-800 ring-1 ring-emerald-100">
             {message}
           </p>
         )}
       </section>
 
       {orders.length === 0 ? (
-        <section className="rounded-[32px] border border-white/70 bg-white/85 p-6 shadow-lg sm:p-8">
-          <h2 className="text-2xl font-bold text-stone-900">Ancora nessun ordine</h2>
+        <section className="rounded-3xl border border-dashed border-stone-300 bg-white/80 p-8 text-center shadow-sm sm:p-10">
+          <h2 className="text-2xl font-black text-stone-950">Ancora nessun ordine</h2>
           <p className="mt-3 max-w-xl text-sm leading-6 text-stone-600 sm:text-base">
             Appena completi il primo checkout, il riepilogo apparirà qui con data, prodotti e stato dell'ordine.
           </p>
 
           <Link
             to="/"
-            className="mt-6 inline-flex rounded-full bg-stone-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-stone-700"
+            className="mt-6 inline-flex min-h-12 items-center rounded-full bg-stone-950 px-5 py-3 text-sm font-bold text-white transition hover:bg-emerald-700"
           >
             Scopri i prodotti
           </Link>
@@ -131,7 +133,7 @@ function MyOrders() {
           {orders.map(order => (
             <article
               key={order._id}
-              className="overflow-hidden rounded-[30px] border border-white/75 bg-white/90 shadow-lg"
+              className="overflow-hidden rounded-3xl border border-white/80 bg-white/95 shadow-[0_18px_60px_rgba(28,25,23,0.08)]"
             >
               <div className="border-b border-stone-100 px-5 py-4 sm:px-6">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -145,7 +147,7 @@ function MyOrders() {
                   </div>
 
                   <span
-                    className={`inline-flex w-fit rounded-full px-3 py-1 text-xs font-black uppercase tracking-[0.18em] ${
+                    className={`inline-flex w-fit rounded-full px-3 py-1 text-xs font-black uppercase tracking-[0.14em] ring-1 ${
                       statusStyles[order.status] || 'bg-stone-100 text-stone-600'
                     }`}
                   >
@@ -159,30 +161,30 @@ function MyOrders() {
                   {order.items.map(item => (
                     <div
                       key={`${order._id}-${item.productId}`}
-                      className="flex flex-col gap-4 rounded-3xl border border-stone-100 bg-stone-50 p-4 sm:flex-row sm:items-center"
+                      className="grid gap-4 rounded-3xl border border-stone-100 bg-stone-50 p-4 sm:grid-cols-[96px_1fr_auto] sm:items-center"
                     >
                       <img
                         src={item.image || 'https://via.placeholder.com/120?text=No+Image'}
                         alt={item.title}
-                        className="h-24 w-full rounded-2xl object-cover sm:w-24"
+                        className="aspect-[4/3] w-full rounded-2xl object-cover sm:aspect-square"
                       />
 
-                      <div className="flex-1">
-                        <h3 className="text-lg font-bold text-stone-900">{item.title}</h3>
+                      <div className="min-w-0">
+                        <h3 className="text-lg font-black text-stone-950">{item.title}</h3>
                         <p className="mt-1 text-sm text-stone-500">
                           Quantità: {item.quantity}
                         </p>
                       </div>
 
-                      <p className="text-lg font-black text-stone-900">
+                      <p className="text-lg font-black text-stone-950">
                         {formatCurrency(item.price * item.quantity)}
                       </p>
                     </div>
                   ))}
                 </div>
 
-                <aside className="rounded-[28px] bg-stone-900 p-5 text-white shadow-sm">
-                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-300">
+                <aside className="rounded-3xl bg-stone-950 p-5 text-white shadow-sm">
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-stone-300">
                     Riepilogo
                   </p>
                   <div className="mt-4 space-y-3 text-sm text-stone-200">

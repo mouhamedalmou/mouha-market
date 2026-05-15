@@ -65,7 +65,7 @@ function AdminUsers() {
       <Toast toast={toast} onClose={() => setToast(null)} />
 
       <section>
-        <p className="text-xs font-black uppercase tracking-[0.24em] text-emerald-700">
+        <p className="text-xs font-black uppercase tracking-[0.22em] text-emerald-700">
           Users
         </p>
         <h1 className="mt-2 text-3xl font-black text-stone-950">Gestione utenti</h1>
@@ -82,7 +82,7 @@ function AdminUsers() {
         />
       </section>
 
-      <section className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
+      <section className="rounded-3xl border border-white/80 bg-white/95 p-4 shadow-[0_14px_45px_rgba(28,25,23,0.06)]">
         <div className="grid gap-3 lg:grid-cols-[1fr_220px]">
           <input
             type="search"
@@ -92,7 +92,7 @@ function AdminUsers() {
               setPage(1)
             }}
             placeholder="Search utenti o email"
-            className="rounded-lg border border-stone-200 px-3 py-2.5 text-sm outline-none transition focus:border-emerald-500"
+            className="min-h-12 rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
           />
           <select
             value={roleFilter}
@@ -100,7 +100,7 @@ function AdminUsers() {
               setRoleFilter(event.target.value)
               setPage(1)
             }}
-            className="rounded-lg border border-stone-200 px-3 py-2.5 text-sm font-semibold outline-none transition focus:border-emerald-500"
+            className="min-h-12 rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-bold outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
           >
             <option value="all">Tutti i ruoli</option>
             <option value="admin">admin</option>
@@ -115,7 +115,7 @@ function AdminUsers() {
           message="Modifica ricerca o filtro ruolo per visualizzare altri account."
         />
       ) : (
-        <section className="overflow-hidden rounded-lg border border-stone-200 bg-white shadow-sm">
+        <section className="overflow-hidden rounded-3xl border border-white/80 bg-white/95 shadow-[0_18px_60px_rgba(28,25,23,0.08)]">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-stone-200 text-sm">
               <thead className="bg-stone-50 text-left text-xs font-black uppercase tracking-[0.14em] text-stone-500">
@@ -160,7 +160,7 @@ function AdminUsers() {
                 type="button"
                 disabled={page === 1}
                 onClick={() => setPage(prev => Math.max(1, prev - 1))}
-                className="rounded-lg border border-stone-200 px-3 py-2 text-sm font-bold text-stone-700 transition hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-50"
+                className="min-h-10 rounded-full border border-stone-200 px-4 py-2 text-sm font-bold text-stone-700 transition hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Prev
               </button>
@@ -168,7 +168,7 @@ function AdminUsers() {
                 type="button"
                 disabled={page === totalPages}
                 onClick={() => setPage(prev => Math.min(totalPages, prev + 1))}
-                className="rounded-lg border border-stone-200 px-3 py-2 text-sm font-bold text-stone-700 transition hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-50"
+                className="min-h-10 rounded-full border border-stone-200 px-4 py-2 text-sm font-bold text-stone-700 transition hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Next
               </button>

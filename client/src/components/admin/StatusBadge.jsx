@@ -10,7 +10,7 @@ const statusClasses = {
 function StatusBadge({ value }) {
   return (
     <span
-      className={`inline-flex rounded-md px-2.5 py-1 text-xs font-black uppercase tracking-[0.12em] ring-1 ${
+      className={`inline-flex rounded-full px-2.5 py-1 text-xs font-black uppercase tracking-[0.12em] ring-1 ${
         statusClasses[value] || 'bg-stone-100 text-stone-700 ring-stone-200'
       }`}
     >

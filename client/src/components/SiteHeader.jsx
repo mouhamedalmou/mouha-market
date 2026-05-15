@@ -9,9 +9,28 @@ import {
 } from '../services/session'
 
 const navLinkBase =
-  'rounded-full px-4 py-2 text-sm font-semibold transition'
+  'inline-flex min-h-10 items-center rounded-full px-4 py-2 text-sm font-bold transition duration-200'
 const mobileLinkBase =
-  'flex min-h-12 items-center justify-between rounded-2xl px-4 py-3 text-base font-semibold transition'
+  'flex min-h-12 items-center justify-between rounded-2xl px-4 py-3 text-base font-bold transition duration-200'
+
+function CartIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      className="h-5 w-5"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="8" cy="21" r="1" />
+      <circle cx="19" cy="21" r="1" />
+      <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h8.76a2 2 0 0 0 1.95-1.57l1.48-6.9H5.12" />
+    </svg>
+  )
+}
 
 function SiteHeader() {
   const navigate = useNavigate()
@@ -31,6 +50,21 @@ function SiteHeader() {
     })
   }, [])
 
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      return undefined
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setIsMobileMenuOpen(false)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isMobileMenuOpen])
+
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false)
   }
@@ -46,32 +80,36 @@ function SiteHeader() {
   const linkClassName = ({ isActive }) =>
     `${navLinkBase} ${
       isActive
-        ? 'bg-stone-900 text-white shadow-sm'
-        : 'bg-white/80 text-stone-700 hover:bg-white'
+        ? 'bg-stone-950 text-white shadow-sm'
+        : 'text-stone-600 hover:bg-stone-100 hover:text-stone-950'
     }`
   const mobileLinkClassName = ({ isActive }) =>
     `${mobileLinkBase} ${
       isActive
-        ? 'bg-stone-900 text-white shadow-sm'
-        : 'bg-white/85 text-stone-700 hover:bg-white'
+        ? 'bg-stone-950 text-white shadow-sm'
+        : 'bg-white text-stone-700 ring-1 ring-stone-200 hover:bg-stone-50'
     }`
   const mobileStaticLinkClassName =
-    `${mobileLinkBase} bg-white/85 text-stone-700 hover:bg-white`
+    `${mobileLinkBase} bg-white text-stone-700 ring-1 ring-stone-200 hover:bg-stone-50`
 
   return (
-    <header className="sticky top-0 z-20 border-b border-stone-200/70 bg-white/85 backdrop-blur">
-      <div className="mx-auto w-full max-w-6xl px-4 py-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-30 border-b border-stone-200/80 bg-white/90 shadow-[0_10px_35px_rgba(28,25,23,0.05)] backdrop-blur-xl">
+      <div className="mx-auto w-full max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-4">
-          <Link to="/" onClick={closeMobileMenu} className="flex min-w-0 items-center gap-3">
-            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-amber-400 text-sm font-black text-stone-900 shadow-sm">
+          <Link
+            to="/"
+            onClick={closeMobileMenu}
+            className="group flex min-w-0 items-center gap-3 rounded-2xl transition"
+          >
+            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-stone-950 text-sm font-black text-white shadow-sm transition group-hover:bg-emerald-700">
               MM
             </span>
 
             <div className="min-w-0">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-amber-700">
+              <p className="text-[11px] font-black uppercase tracking-[0.22em] text-emerald-700">
                 Ecommerce
               </p>
-              <p className="truncate text-lg font-semibold text-stone-900">
+              <p className="truncate text-lg font-black text-stone-950">
                 Mouha Market
               </p>
             </div>
@@ -80,7 +118,7 @@ function SiteHeader() {
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen((current) => !current)}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-stone-200 bg-white text-stone-900 shadow-sm transition hover:border-stone-300 hover:bg-stone-50 md:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-stone-200 bg-white text-stone-950 shadow-sm transition hover:border-stone-300 hover:bg-stone-50 focus:outline-none focus:ring-4 focus:ring-emerald-100 md:hidden"
             aria-label={isMobileMenuOpen ? 'Chiudi menu' : 'Apri menu'}
             aria-expanded={isMobileMenuOpen}
             aria-controls="mobile-menu"
@@ -107,7 +145,7 @@ function SiteHeader() {
             </span>
           </button>
 
-          <nav className="hidden flex-1 flex-wrap items-center justify-end gap-2 md:flex lg:gap-3">
+          <nav className="hidden flex-1 flex-wrap items-center justify-end gap-1 md:flex lg:gap-2">
             <NavLink to="/" className={linkClassName}>
               Prodotti
             </NavLink>
@@ -126,9 +164,10 @@ function SiteHeader() {
 
             <NavLink to="/cart" className={linkClassName}>
               <span className="inline-flex items-center gap-2">
-                Carrello
+                <CartIcon />
+                <span>Carrello</span>
                 {cartCount > 0 && (
-                  <span className="inline-flex min-w-6 items-center justify-center rounded-full bg-amber-400 px-2 py-0.5 text-xs font-black text-stone-900">
+                  <span className="inline-flex min-w-6 items-center justify-center rounded-full bg-emerald-500 px-2 py-0.5 text-xs font-black text-white">
                     {cartCount}
                   </span>
                 )}
@@ -145,7 +184,7 @@ function SiteHeader() {
 
                 <button
                   onClick={handleLogout}
-                  className="rounded-full bg-stone-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-stone-700"
+                  className="inline-flex min-h-10 items-center rounded-full bg-stone-950 px-4 py-2 text-sm font-bold text-white transition hover:bg-stone-800"
                 >
                   Logout
                 </button>
@@ -161,10 +200,10 @@ function SiteHeader() {
         {isMobileMenuOpen && (
           <nav
             id="mobile-menu"
-            className="mt-4 grid gap-2 border-t border-stone-200/70 pt-4 md:hidden"
+            className="mt-3 grid gap-2 border-t border-stone-200/80 pt-3 md:hidden"
           >
             <NavLink to="/" onClick={closeMobileMenu} className={mobileLinkClassName}>
-              Home
+              Prodotti
             </NavLink>
 
             <Link
@@ -172,25 +211,30 @@ function SiteHeader() {
               onClick={closeMobileMenu}
               className={mobileStaticLinkClassName}
             >
-              Products
+              Catalogo
             </Link>
 
             <NavLink to="/cart" onClick={closeMobileMenu} className={mobileLinkClassName}>
-              <span>Cart</span>
+              <span className="inline-flex items-center gap-2">
+                <CartIcon />
+                Carrello
+              </span>
               {cartCount > 0 && (
-                <span className="inline-flex min-w-7 items-center justify-center rounded-full bg-amber-400 px-2 py-0.5 text-xs font-black text-stone-900">
+                <span className="inline-flex min-w-7 items-center justify-center rounded-full bg-emerald-500 px-2 py-0.5 text-xs font-black text-white">
                   {cartCount}
                 </span>
               )}
             </NavLink>
 
-            <NavLink
-              to="/my-orders"
-              onClick={closeMobileMenu}
-              className={mobileLinkClassName}
-            >
-              Orders
-            </NavLink>
+            {loggedIn && (
+              <NavLink
+                to="/my-orders"
+                onClick={closeMobileMenu}
+                className={mobileLinkClassName}
+              >
+                I miei ordini
+              </NavLink>
+            )}
 
             {loggedIn && (user?.role === 'admin' || user?.isAdmin) && (
               <NavLink to="/admin" onClick={closeMobileMenu} className={mobileLinkClassName}>
@@ -200,21 +244,21 @@ function SiteHeader() {
 
             {loggedIn ? (
               <>
-                <div className="rounded-2xl bg-white/85 px-4 py-3 text-sm font-semibold text-stone-600">
-                  Profile{user?.name ? `: ${user.name}` : ''}
+                <div className="rounded-2xl bg-stone-50 px-4 py-3 text-sm font-semibold text-stone-600 ring-1 ring-stone-200">
+                  Profilo{user?.name ? `: ${user.name}` : ''}
                 </div>
 
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="flex min-h-12 items-center rounded-2xl bg-stone-900 px-4 py-3 text-base font-semibold text-white transition hover:bg-stone-700"
+                  className="flex min-h-12 items-center rounded-2xl bg-stone-950 px-4 py-3 text-base font-bold text-white transition hover:bg-stone-800"
                 >
                   Logout
                 </button>
               </>
             ) : (
               <NavLink to="/auth" onClick={closeMobileMenu} className={mobileLinkClassName}>
-                Login
+                Accedi
               </NavLink>
             )}
           </nav>
