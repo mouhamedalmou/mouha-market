@@ -63,7 +63,7 @@ function AdminLayout() {
         </div>
       </aside>
 
-      <div className="lg:pl-72">
+      <div className="min-w-0 lg:pl-72">
         <header className="sticky top-0 z-20 border-b border-stone-200/80 bg-white/90 px-4 py-3 shadow-[0_10px_35px_rgba(28,25,23,0.04)] backdrop-blur-xl sm:px-6 lg:px-8">
           <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
             <div>
@@ -75,7 +75,7 @@ function AdminLayout() {
               </p>
             </div>
 
-            <div className="flex max-w-full gap-2 overflow-x-auto pb-1 lg:hidden">
+            <div className="flex max-w-full gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] lg:hidden [&::-webkit-scrollbar]:hidden">
               {navItems.map(item => (
                 <NavLink
                   key={item.to}
@@ -103,7 +103,7 @@ function AdminLayout() {
           </div>
         </header>
 
-        <main className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8">
+        <main className="mx-auto flex w-full max-w-7xl flex-col gap-4 overflow-x-hidden px-3 py-4 sm:gap-6 sm:px-6 sm:py-6 lg:px-8">
           <Outlet />
         </main>
       </div>
